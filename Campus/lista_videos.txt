@@ -1,0 +1,26 @@
+Señales y sistemas 2C2025 - Horas totales: 21.88
+
+1 - Introducción Señales y Sistemas - parte 1. FIUBA - 1.51 hs - https://www.youtube.com/watch?v=6SFj6X6eSz0
+2 - Introducción Señales y Sistemas - parte 2. FIUBA - 0.67 hs - https://www.youtube.com/watch?v=f4gzw4I_Jas
+3 - Sistemas LTI - parte 1. FIUBA - 0.37 hs - https://www.youtube.com/watch?v=8JQLb2FmzRQ
+4 - Sistemas LTI - parte 2. FIUBA - 0.51 hs - https://www.youtube.com/watch?v=nbLp5i9HZbM
+5 - Sistemas LTI - parte 3. FIUBA - 0.82 hs - https://www.youtube.com/watch?v=wzHLkPHJgXs
+6 - Series de Fourier - parte 1.FIUBA - 1.5 hs - https://www.youtube.com/watch?v=J9dYx5RGppY
+7 - Series de Fourier - parte 2. FIUBA - 0.51 hs - https://www.youtube.com/watch?v=5knLQo2EX38
+8 - Transformada de Fourier de tiempo continuo - parte 1. FIUBA - 1.48 hs - https://www.youtube.com/watch?v=xu6C0BNIym0
+9 - Transformada de Fourier de tiempo continuo - parte 2.FIUBA - 0.95 hs - https://www.youtube.com/watch?v=CEylBtYtE7Y
+10 - Transformada de Fourier tiempo discreto. FIUBA - 0.88 hs - https://www.youtube.com/watch?v=Y9ObwFBe8c0
+11 - Muestreo tiempo continuo - parte 1. FIUBA - 1.4 hs - https://www.youtube.com/watch?v=sfiPCNOIDVo
+12 - Muestreo tiempo continuo parte 2. FIUBA - 0.64 hs - https://www.youtube.com/watch?v=6VXrX6E89T8
+13 - Muestreo tiempo discreto. FIUBA - 0.9 hs - https://www.youtube.com/watch?v=tS01jMIYwGQ
+14 - Errores de cuantificación. FIUBA - 1.02 hs - https://www.youtube.com/watch?v=aJcH1THmiyA
+15 - Charla DFT - parte 1. FIUBA - 1.39 hs - https://www.youtube.com/watch?v=HPJ0gX-iRVA
+16 - Charla DFT - parte 2. FIUBA - 0.61 hs - https://www.youtube.com/watch?v=ehj1yCcwwTc
+17 - Charla DFT - parte 3. FIUBA - 0.44 hs - https://www.youtube.com/watch?v=7zsx0l4kiwU
+18 - Transformada de Laplace - parte 1.FIUBA - 1.08 hs - https://www.youtube.com/watch?v=8L-K1WYEYj0
+19 - Transformada de Laplace - parte 2.FIUBA - 0.46 hs - https://www.youtube.com/watch?v=_gUVWRdkfsU
+20 - Transformada Z. FIUBA - 1.23 hs - https://www.youtube.com/watch?v=aqX8a0AQ8BI
+21 - Análisis de sistemas de tiempo discreto. FIUBA - 1.24 hs - https://www.youtube.com/watch?v=Veg_9UVFrzk
+22 - Realización de sistemas tiempo discreto. FIUBA - 0.66 hs - https://www.youtube.com/watch?v=XyIY9x-lksY
+23 - Diseño filtros de tiempo discreto - parte 1.FIUBA - 0.95 hs - https://www.youtube.com/watch?v=DY7JmVglXkI
+24 - Diseño de filtros de tiempo discreto - parte 2.FIUBA - 0.66 hs - https://www.youtube.com/watch?v=R9M3P44cUzg

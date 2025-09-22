@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Deja el Mal Hábito</title>
+  <style>
+    /* Neo-brutalist styling */
+    body {
+      font-family: 'Courier New', Courier, monospace;
+      background: #fff;
+      color: #000;
+      padding: 2em;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2em;
+      /* border: 3px solid #000; */
+      padding: 0.5em;
+      /* display: inline-block; */
+      margin: 0 auto 1em;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(15, 20px);
+      gap: 15px;
+      justify-content: center;
+      margin-top: 2em;
+    }
+
+    .day {
+      width: 30px;
+      height: 30px;
+      background-color: #fff;
+      border: 2px solid #000;
+      cursor: pointer;
+    }
+
+    .day.done {
+      background-color: #00ff00;
+    }
+
+    .controls {
+      text-align: center;
+      margin-top: 2em;
+    }
+
+    button {
+      background: #ffffff;
+      color: #000000;
+      border: 3px solid #000;
+      box-shadow: 4px 4px#000;
+      font-size: 1.2em;
+      font-weight: 700;
+      padding: 0.7em 1.5em;
+      cursor: pointer;
+      font-family: inherit;
+      margin: 10px;
+    }
+
+    button:hover {
+      background: #fff;
+
+    }
+
+    #markTodayBtn:hover {
+      color: #00b728;
+    }
+    #resetGrid:hover{
+      color: #da0303;
+
+    }
+    .legend {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 1em;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Rastreador Anti-Hábito</h1>
+
+  <div class="controls">
+    <button onclick="markToday()" id="markTodayBtn">Marcar día cumplido</button>
+    <button onclick="resetGrid()" id="resetGrid">Reiniciar progreso</button>
+  </div>
+
+  <div class="grid" id="commitWall"></div>
+
+  <div class="legend">🟩 Día cumplido &nbsp;&nbsp;⬜ Día pendiente</div>
+
+  <script>
+    const rows = 10;
+    const cols = 7;
+    const qty_days = 30;
+    const totalDays = rows * cols;
+    const wall = document.getElementById('commitWall');
+
+    // Estado del progreso
+    let progress = JSON.parse(localStorage.getItem('habitGrid')) || Array(totalDays).fill(false);
+    let lastMarkedDate = localStorage.getItem('lastMarkedDate');
+
+    // Función para renderizar el grid
+    function renderGrid() {
+      wall.innerHTML = '';
+      for (let i = 0; i < totalDays; i++) {
+        const cell = document.createElement('div');
+        cell.textContent = i % qty_days + 1
+        cell.classList.add('day');
+        if (progress[i]) cell.classList.add('done');
+        wall.appendChild(cell);
+      }
+    }
+
+    // Marcar el día actual
+    function markToday() {
+      const today = new Date().toISOString().split('T')[0];
+      const filledCount = progress.filter(Boolean).length;
+
+      // Solo se puede marcar una vez por día
+      if (lastMarkedDate === today) {
+        alert("Ya marcaste el día de hoy.");
+        return;
+      }
+
+      if (filledCount < totalDays) {
+        progress[filledCount] = true;
+        localStorage.setItem('habitGrid', JSON.stringify(progress));
+        localStorage.setItem('lastMarkedDate', today);
+        renderGrid();
+      }
+    }
+
+    // Reiniciar todo
+    function resetGrid() {
+      if (confirm('¿Seguro que quieres reiniciar tu progreso?')) {
+        progress = Array(totalDays).fill(false);
+        localStorage.removeItem('habitGrid');
+        localStorage.removeItem('lastMarkedDate');
+        renderGrid();
+      }
+    }
+
+    // Verificar si se perdió un día
+    function checkMissedDay() {
+      const today = new Date().toISOString().split('T')[0];
+      if (!lastMarkedDate) return; // No hay datos aún
+
+      const lastDate = new Date(lastMarkedDate);
+      const currentDate = new Date(today);
+
+      const diff = (currentDate - lastDate) / (1000 * 60 * 60 * 24);
+
+      if (diff >= 1) {
+        // Se saltó un día → reiniciar
+        progress = Array(totalDays).fill(false);
+        localStorage.removeItem('habitGrid');
+        localStorage.removeItem('lastMarkedDate');
+        alert("No marcaste el día anterior. Tu progreso ha sido reiniciado.");
+      }
+    }
+
+    checkMissedDay();
+    renderGrid();
+  </script>
+
+</body>
+
+</html>
