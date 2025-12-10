@@ -1,3 +1,11 @@
+"""
+  @file signal.py
+  @author Guido Rodriguez (guerodriguez@fi.uba.ar)
+  @version 1.0
+  @date 2025-11-04
+  @copyright Copyright (c) 2025
+"""
+
 import numpy as np
 
 class Signal:
@@ -45,19 +53,62 @@ class Signal:
         )
 
     def fft_phase(self, half_spectrum=True):
-      freq_index = np.fft.fftfreq(len(self._signal["value"]), 1/self._sample_rate)
-      phase = np.angle(np.fft.fft(self._signal["value"]))
-      return freq_index[:len(phase) // 2 if half_spectrum else None], phase[:len(phase) // 2 if half_spectrum else None]
-      
-    # def fft_magnitude(self, half_spectrum=True, in_db=False, db_ref=1,):
-    def fft_magnitude(self, half_spectrum=True, absolute=True):
-        freq_index = np.fft.fftfreq(len(self._signal["value"]), 1/self._sample_rate)
+        freq_index = np.fft.fftfreq(len(self._signal["value"]), 1 / self._sample_rate)
+        phase = np.angle(np.fft.fft(self._signal["value"]))
+        return (
+            freq_index[: len(phase) // 2 if half_spectrum else None],
+            phase[: len(phase) // 2 if half_spectrum else None],
+        )
+
+    def fft_magnitude(
+        self,
+        half_spectrum=True,
+        absolute=True,
+        in_db=False,
+        db_ref=1,
+    ):
+        freq_index = np.fft.fftfreq(len(self._signal["value"]), 1 / self._sample_rate)
         magnitude = np.abs(np.fft.fft(self._signal["value"])) if absolute else np.fft.fft(self._signal["value"])
-        return freq_index[:len(magnitude) // 2 if half_spectrum else None], magnitude[:len(magnitude) // 2 if half_spectrum else None]
+        if in_db:
+            magnitude = 10 * np.log10(magnitude / db_ref + 1e-12)  # Agrego un offset para evitar log(0)
+        return (
+            freq_index[: len(magnitude) // 2 if half_spectrum else None],
+            magnitude[: len(magnitude) // 2 if half_spectrum else None],
+        )
+
+    def cut_above(self, cutoff_frequency):
+        freq_index, magnitude = self.fft_magnitude(half_spectrum=False)
+        _, phase = self.fft_phase(half_spectrum=False)
+
+        filtered_magnitude = np.where(np.abs(freq_index) <= cutoff_frequency, magnitude, 0)
+        filtered_signal = np.fft.ifft(filtered_magnitude * np.exp(1j * phase)).real
+
+        return Signal(
+            label=self._label + f" (recortada desde {cutoff_frequency} Hz)",
+            data=filtered_signal,
+            time=self._signal["time"],
+            sample_rate=self._sample_rate,
+        )
+
+    def freq_segment(): 
+      pass
     
+    # def remove_zeros(self, threshold=1e-12, epsilon=1e-10):
+    #     cleaned_data = np.where(np.isnan(self.raw_data) | (np.abs(self.raw_data) < threshold), epsilon, self.raw_data)
+    #     return Signal(
+    #         label=self._label,
+    #         data=cleaned_data,
+    #         time=self._signal["time"],
+    #         sample_rate=self._sample_rate,
+    #     )
+
     @property
     def raw_data(self):
         return self._signal["value"]
+
+    @property
+    def np_raw_data(self):
+        return np.array(self._signal["value"])
 
     @property
     def raw_signal(self):

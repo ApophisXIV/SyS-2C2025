@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Slideshow de Fotos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+    }
+
+    img {
+      max-width: 1000px;
+      max-height: 1600px;
+      margin: 20px;
+      border-radius: 10px;
+    }
+
+    .buttons {
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Revisa la Foto</h1>
+  <img src="{{ photo }}" alt="Foto">
+  <div class="buttons">
+    <form method="POST" action="/accept">
+      <button type="submit">❤️ Aceptar</button>
+    </form>
+    <form method="POST" action="/reject">
+      <button type="submit">❌ Rechazar</button>
+    </form>
+  </div>
+</body>
+
+</html>

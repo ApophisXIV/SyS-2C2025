@@ -1,5 +1,10 @@
-import wave
-import numpy as np
+"""
+  @file wav.py
+  @author Guido Rodriguez (guerodriguez@fi.uba.ar)
+  @version 1.0
+  @date 2025-11-04
+  @copyright Copyright (c) 2025
+"""
 
 class Wav:
     def __init__(self, path):
@@ -58,7 +63,7 @@ class Wav:
         print(f"Bits per Sample: {self._bits_per_sample}")
         print(f"Subchunk2 ID: {self._subchunk2_id}")
         print(f"Subchunk2 Size (data size): {self._subchunk2_size}")
-        print('')
+        print("")
 
     @property
     def data(self):
@@ -119,3 +124,64 @@ class Wav:
     @property
     def subchunk2_id(self):
         return self._subchunk2_id
+
+
+import wave
+def write_wav(path, data, sample_rate, num_channels=1, bits_per_sample=16): 
+    with wave.open(path, 'wb') as wav_file:
+        wav_file.setnchannels(num_channels)
+        wav_file.setsampwidth(bits_per_sample // 8)
+        wav_file.setframerate(sample_rate)
+        
+        data = [max(-32768, min(32767, int(sample))) for sample in data]
+        byte_data = bytearray()
+        for sample in data:
+            byte_data.extend(sample.to_bytes(bits_per_sample // 8, byteorder='little', signed=True))
+        wav_file.writeframes(byte_data)
+
+def _write_wav(path, data, sample_rate, num_channels=1, bits_per_sample=16): 
+    """
+    Crea un archivo WAV con los datos proporcionados.
+    
+    : param path           : Ruta donde se guardará el archivo WAV.
+    : param data           : Lista de muestras de audio.
+    : param sample_rate    : Tasa de muestreo (ej. 44100).
+    : param num_channels   : Número de canales (1 para mono, 2 para estéreo).
+    : param bits_per_sample: Bits por muestra (usualmente 16).
+    """
+      # Asegurarse de que las muestras están dentro del rango adecuado para 16 bits
+    data = [max(-32768, min(32767, int(sample))) for sample in data]
+
+      # Calcular el byte_rate y block_align
+    byte_rate   = sample_rate * num_channels * bits_per_sample // 8
+    block_align = num_channels * bits_per_sample // 8
+
+      # Calcular el tamaño de los datos (subchunk2_size)
+    subchunk2_size = len(data) * num_channels * bits_per_sample // 8
+      # Calcular el tamaño total del archivo (chunk_size)
+    chunk_size = 36 + subchunk2_size
+
+      # Escribir el archivo WAV
+    with open(path, "wb") as f: 
+          # Encabezado RIFF
+        f.write(b"RIFF")
+        f.write(chunk_size.to_bytes(4, "little"))
+        f.write(b"WAVE")
+
+        # Subchunk fmt
+        f.write(b"fmt ")
+        f.write((16).to_bytes(4, "little"))  # Tamaño del subchunk fmt
+        f.write((1).to_bytes(2, "little"))   # Formato de audio (1 = PCM)
+        f.write(num_channels.to_bytes(2, "little"))
+        f.write(sample_rate.to_bytes(4, "little"))
+        f.write(byte_rate.to_bytes(4, "little"))
+        f.write(block_align.to_bytes(2, "little"))
+        f.write(bits_per_sample.to_bytes(2, "little"))
+
+        # Subchunk data
+        f.write(b"data")
+        f.write(subchunk2_size.to_bytes(4, "little"))
+
+        # Escribir las muestras de audio
+        for sample in data:
+            f.write(int(sample).to_bytes(2, "little", signed=True))

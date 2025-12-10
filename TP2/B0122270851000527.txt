@@ -1,0 +1,10 @@
+S. Braun,
+WINDOWS,
+Editor(s): S. Braun,
+Encyclopedia of Vibration,
+Elsevier,
+2001,
+Pages 1587-1595,
+ISBN 9780122270857,
+https://doi.org/10.1006/rwvb.2001.0052.
+(https://www.sciencedirect.com/science/article/pii/B0122270851000527)

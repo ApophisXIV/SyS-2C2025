@@ -1,0 +1,13 @@
+cadetblue_opacity_25.png
+darkcyan_opacity_15.png
+darkolivegreen_opacity_15.png
+darkorange_opacity_25.png
+darkseagreen_opacity_50.png
+darkslategrey_opacity_15.png
+dodgerblue_opacity_15.png
+goldenrod_opacity_25.png
+grey_opacity_25.png
+lightslategray_opacity_25.png
+lightslategrey_opacity_25.png
+orange_opacity_25.png
+teal_opacity_15.png
